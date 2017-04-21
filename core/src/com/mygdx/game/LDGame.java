@@ -1,33 +1,48 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.Screen;
+import com.mygdx.game.data.ImageCache;
+import com.mygdx.game.data.SkinCache;
+import com.mygdx.game.data.SoundCache;
+import com.mygdx.game.screen.GameScreen;
+import com.mygdx.game.screen.MenuScreen;
 
-public class LDGame extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
+public class LDGame extends Game {
 	
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		ImageCache.load();
+		SkinCache.load();
+		SoundCache.load();
+		Gdx.input.setCatchBackKey(true);
+		setMenuScreen();
 	}
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+		super.render();
 	}
 	
 	@Override
 	public void dispose () {
-		batch.dispose();
-		img.dispose();
+		Screen screen = getScreen();
+		if (screen != null) screen.dispose();
+		super.dispose();
+	}
+
+	@Override
+	public void setScreen(Screen screen) {
+		Screen old = getScreen();
+		super.setScreen(screen);
+		if (old != null) old.dispose();
+	}
+
+	public void setGameScreen() {
+		setScreen(new GameScreen(this));
+	}
+	public void setMenuScreen() {
+		setScreen(new MenuScreen(this));
 	}
 }
