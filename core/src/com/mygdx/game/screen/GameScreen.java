@@ -14,6 +14,8 @@ import com.mygdx.game.model.Player;
 import com.mygdx.game.model.Terrain;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by kettricken on 21.04.2017.
@@ -63,21 +65,43 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
     public void render(float delta) {
         super.render(delta);
 
-        Gdx.gl20.glClearColor(0f, 0f, 0, 1);
+        Gdx.gl20.glClearColor(0.75f, 0.75f, 1, 1);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         update(delta);
 
+        Collections.sort(players, new Comparator<Player>() {
+            @Override
+            public int compare(Player o1, Player o2) {
+                if (o1.getY() > o2.getY()) {
+                    return -1;
+                } else if (o1.getY() < o2.getY()) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+
         batch.begin();
+        for (Player player : players) {
+            if (player.isBehindTerrain()) {
+                player.draw(batch);
+            }
+        }
         terrain.draw(batch);
-        player.draw(batch);
-        player2.draw(batch);
+        for (Player player : players) {
+            if (!player.isBehindTerrain()) {
+                player.draw(batch);
+            }
+        }
         batch.end();
 
         shapes.begin();
         terrain.debug(shapes);
-        player.debug(shapes);
-        player2.debug(shapes);
+        for (Player player : players) {
+            player.debug(shapes);
+        }
         shapes.end();
     }
 

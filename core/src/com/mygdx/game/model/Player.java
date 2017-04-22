@@ -32,13 +32,14 @@ public class Player extends Sprite implements MovementListener {
 
     private final Vector2 velocity = new Vector2();
     private final Vector2 speed = new Vector2(300, 300);
-    private final Vector2 kickDirection = new Vector2(300, 300);
-    private final Vector2 kickedDirection = new Vector2(0,1);
+    private final Vector2 kickDirection = new Vector2(0, 1);
+    private final Vector2 kickedDirection = new Vector2(0,0);
     private final float gravity = 100;
 
     private int state;
     private float stateTime;
     private boolean flipX = false;
+    private boolean behindTerrain = false;
 
     private Rectangle intersection = new Rectangle();
     private Map<Integer, StateAnimation> animations;
@@ -163,7 +164,19 @@ public class Player extends Sprite implements MovementListener {
     }
 
     public void fall() {
+        if (state == FALL) return;
         setState(FALL);
+        System.out.println(velocity.x + " " + velocity.y);
+        System.out.println(kickedDirection.x + " " + kickedDirection.y);
+        if (kickedDirection.x == -1 || kickedDirection.y == 1) {
+            behindTerrain = true;
+        } else if (kickedDirection.x == 1 || kickedDirection.y == -1){
+            behindTerrain = false;
+        } else if (velocity.x > 0 || velocity.y < 0) {
+            behindTerrain = false;
+        } else if (velocity.x < 0 || velocity.y > 0) {
+            behindTerrain = true;
+        }
     }
 
     public Vector2 getCollisionPoint() {
@@ -233,5 +246,9 @@ public class Player extends Sprite implements MovementListener {
         shapes.rect(kickBox.getX(), kickBox.getY(), kickBox.getWidth(), kickBox.getHeight());
         shapes.setColor(0, 0, 1, 1);
         shapes.rect(kickedBox.getX(), kickedBox.getY(), kickedBox.getWidth(), kickedBox.getHeight());
+    }
+
+    public boolean isBehindTerrain() {
+        return behindTerrain;
     }
 }
