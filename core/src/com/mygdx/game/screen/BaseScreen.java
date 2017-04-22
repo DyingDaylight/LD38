@@ -21,9 +21,9 @@ public abstract class BaseScreen extends ScreenAdapter {
     private ExtendViewport viewport;
     private float worldWidth, worldHeight;
 
-    private SpriteBatch batch;
-    private ShapeRenderer shapes;
-    private Stage stage;
+    protected SpriteBatch batch;
+    protected ShapeRenderer shapes;
+    protected Stage stage;
 
     public BaseScreen(LDGame game) {
         this.game = game;
@@ -34,6 +34,7 @@ public abstract class BaseScreen extends ScreenAdapter {
         batch = new SpriteBatch();
         stage = new Stage(viewport);
         shapes = new ShapeRenderer();
+        shapes.setAutoShapeType(true);
     }
 
     protected abstract void layoutViewsLandscape(int width, int height);

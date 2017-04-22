@@ -17,7 +17,8 @@ public class LDGame extends Game {
 		SkinCache.load();
 		SoundCache.load();
 		Gdx.input.setCatchBackKey(true);
-		setMenuScreen();
+		//setMenuScreen();
+		setGameScreen();
 	}
 
 	@Override

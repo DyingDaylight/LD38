@@ -6,8 +6,22 @@ filter: Nearest,Nearest
 repeat: none
 badlogic
   rotate: false
-  xy: 2, 2
+  xy: 2, 187
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
+terrain
+  rotate: false
+  xy: 262, 315
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+tile
+  rotate: false
+  xy: 2, 2
+  size: 187, 181
+  orig: 187, 181
+  offset: 0, 0
+  index: 1
