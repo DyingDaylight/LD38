@@ -1,8 +1,6 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.mygdx.game.data.ImageCache;
 import com.mygdx.game.data.SkinCache;
 import com.mygdx.game.data.SoundCache;
@@ -42,6 +40,18 @@ public class LDGame extends Game {
 
 	public void setGameScreen() {
 		setScreen(new GameScreen(this));
+
+        InputMultiplexer multiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
+        multiplexer.addProcessor(new InputAdapter() {
+            @Override
+            public boolean keyUp(int keycode) {
+                if (keycode == Input.Keys.R) {
+                    setGameScreen();
+                }
+                return super.keyUp(keycode);
+            }
+        });
+        Gdx.input.setInputProcessor(multiplexer);
 	}
 	public void setMenuScreen() {
 		setScreen(new MenuScreen(this));

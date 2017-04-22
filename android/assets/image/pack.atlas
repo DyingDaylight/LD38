@@ -11,6 +11,34 @@ badlogic
   orig: 256, 256
   offset: 0, 0
   index: -1
+fish
+  rotate: false
+  xy: 262, 316
+  size: 94, 127
+  orig: 94, 127
+  offset: 0, 0
+  index: 1
+fish
+  rotate: false
+  xy: 360, 316
+  size: 94, 127
+  orig: 94, 127
+  offset: 0, 0
+  index: 2
+fish
+  rotate: false
+  xy: 262, 185
+  size: 94, 127
+  orig: 94, 127
+  offset: 0, 0
+  index: 3
+player
+  rotate: false
+  xy: 193, 55
+  size: 50, 128
+  orig: 50, 128
+  offset: 0, 0
+  index: -1
 tile
   rotate: false
   xy: 2, 2

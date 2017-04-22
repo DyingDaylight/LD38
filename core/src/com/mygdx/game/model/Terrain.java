@@ -3,6 +3,7 @@ package com.mygdx.game.model;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 import com.mygdx.game.data.Configuration;
 import com.mygdx.game.data.ImageCache;
@@ -47,8 +48,6 @@ public class Terrain {
             collisionPolygon.getVertices()[i] = collisionPolygon.getVertices()[i] + OFFSET_X;
             collisionPolygon.getVertices()[i+1] = collisionPolygon.getVertices()[i+1] + OFFSET_Y;
         }
-
-        //Intersector.overlapConvexPolygons(collisionPolygon, collisionPolygon);
     }
 
     public void draw(Batch batch) {
@@ -64,5 +63,27 @@ public class Terrain {
     public void debug(ShapeRenderer shapeRenderer) {
         shapeRenderer.setColor(1, 0, 0, 1);
         shapeRenderer.polygon(collisionPolygon.getVertices());
+    }
+
+    public boolean contains(Player player) {
+        return Intersector.isPointInPolygon(collisionPolygon.getVertices(),
+                0, collisionPolygon.getVertices().length,
+                player.getCollisionPoint().x, player.getCollisionPoint().y);
+    }
+
+    public int getLeftCape() {
+        return (int) (collisionPolygon.getX() + HEIGHT * BLOCK_SHIFT);
+    }
+
+    public int getRightCape() {
+        return (int) (collisionPolygon.getVertices()[4] - HEIGHT * BLOCK_SHIFT);
+    }
+
+    public int getBottomCape() {
+        return (int) collisionPolygon.getVertices()[1];
+    }
+
+    public int getTopCape() {
+        return (int) collisionPolygon.getVertices()[7];
     }
 }
