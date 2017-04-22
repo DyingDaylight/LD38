@@ -3,6 +3,7 @@ package com.mygdx.game.model;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -32,14 +33,18 @@ public class Player extends Sprite implements MovementListener {
     private final Vector2 velocity = new Vector2();
     private final Vector2 speed = new Vector2(300, 300);
     private final Vector2 kickDirection = new Vector2(300, 300);
+    private final Vector2 kickedDirection = new Vector2(0,1);
     private final float gravity = 100;
 
     private int state;
     private float stateTime;
+    private boolean flipX = false;
 
-    private Rectangle kickRegion;
     private Rectangle intersection = new Rectangle();
     private Map<Integer, StateAnimation> animations;
+
+    private Rectangle kickBox= new Rectangle();
+    private Rectangle kickedBox= new Rectangle();
 
     public Player(Map<Integer, StateAnimation> animations) {
         super(ImageCache.getTexture("fish"));
@@ -47,7 +52,8 @@ public class Player extends Sprite implements MovementListener {
         this.animations = animations;
 
         setState(STAND);
-        kickRegion = new Rectangle(0, 0, getRegionWidth() / 2, getRegionHeight());
+
+        kickedBox.set(30, 30, 30, 30);
     }
 
     public void update(float delta) {
@@ -61,26 +67,38 @@ public class Player extends Sprite implements MovementListener {
             velocity.x = 0;
             velocity.y = 0;
         } else if (state == KICKED) {
-            velocity.x = 0;
-            velocity.y = 0;
+            velocity.x = kickedDirection.x;
+            velocity.y = kickedDirection.y;
         } else {
             if (movementController.isMovingLeft()) {
+                if (state == STAND) setState(WALK);
                 velocity.x = -speed.x;
                 velocity.y = 0;
+                kickDirection.set(-1, 0);
+                flipX = true;
             } else if (movementController.isMovingRight()) {
+                if (state == STAND) setState(WALK);
                 velocity.x = speed.x;
                 velocity.y = 0;
+                kickDirection.set(1, 0);
+                flipX = false;
             } else if (movementController.isMovingUp()) {
+                if (state == STAND) setState(WALK);
                 velocity.y = speed.y;
                 velocity.x = 0;
+                kickDirection.set(0, 1);
+                flipX = true;
             } else if (movementController.isMovingDown()) {
+                if (state == STAND) setState(WALK);
                 velocity.y = -speed.y;
                 velocity.x = 0;
+                kickDirection.set(0, -1);
+                flipX = false;
             } else {
+                if (state == WALK) setState(STAND);
                 velocity.x = 0;
                 velocity.y = 0;
             }
-            kickDirection.set(velocity.x, velocity.y);
         }
 
         setX(getX() + velocity.x * delta);
@@ -92,6 +110,7 @@ public class Player extends Sprite implements MovementListener {
     public void draw(Batch batch) {
         try {
             setRegion(getStateFrame());
+            setFlip(flipX, false);
         } catch (Exception e) {
             String message = String.format("Failed to obtain animation. State: %d; texture: %s",
                     state,
@@ -147,16 +166,16 @@ public class Player extends Sprite implements MovementListener {
         setState(FALL);
     }
 
-    public void kicked() {
-        setState(KICKED);
-    }
-
     public Vector2 getCollisionPoint() {
         return collisionPoint.set(getX() + getWidth() / 2, getY());
     }
 
     public boolean inRegion(Rectangle kickRegion) {
-        return Intersector.intersectRectangles(getBoundingRectangle(), kickRegion, intersection);
+        return Intersector.intersectRectangles(kickedBox, kickRegion, intersection);
+    }
+
+    private StateAnimation getCurrentAnimation() {
+        return animations.get(animations.containsKey(state) ? state : STAND);
     }
 
     @Override
@@ -167,11 +186,52 @@ public class Player extends Sprite implements MovementListener {
         }
     }
 
-    public Rectangle getKickRegion() {
-        return getBoundingRectangle();
+    public Vector2 getKickDirection() {
+        return kickDirection;
     }
 
-    private StateAnimation getCurrentAnimation() {
-        return animations.get(animations.containsKey(state) ? state : STAND);
+    public Rectangle getKickBox() {
+        if (kickDirection.x == -1) {
+            return kickBox.set(getX() + 13, getY(), 30, 30);
+        } else if (kickDirection.x == 1) {
+            return kickBox.set(getX() + getRegionWidth() - 50, getY(), 30, 30);
+        } else {
+            return kickBox.set(getX() + getRegionWidth() / 2 - 20, getY(), getRegionWidth() / 2 - 10, 20);
+        }
+    }
+
+
+    public Rectangle getKickedBox() {
+        return kickedBox.set(getX() + getRegionWidth() / 2 - 20, getY(), 40, 60);
+    }
+
+    public void kicked(Vector2 kickDirection) {
+        setState(KICKED);
+        if (kickDirection.x == -1) {
+            kickedDirection.x = -700;
+            kickedDirection.y = 0;
+            flipX = true;
+        } else if (kickDirection.x == 1) {
+            kickedDirection.x = 700;
+            kickedDirection.y = 0;
+            flipX = false;
+        } else if (kickDirection.y == 1) {
+            kickedDirection.x = 0;
+            kickedDirection.y = 700;
+            flipX = false;
+        } else if (kickDirection.y == -1) {
+            kickedDirection.x = 0;
+            kickedDirection.y = -700;
+            flipX = true;
+        }
+    }
+
+    public void debug(ShapeRenderer shapes) {
+        getKickBox();
+        getKickedBox();
+        shapes.setColor(1, 0, 0, 1);
+        shapes.rect(kickBox.getX(), kickBox.getY(), kickBox.getWidth(), kickBox.getHeight());
+        shapes.setColor(0, 0, 1, 1);
+        shapes.rect(kickedBox.getX(), kickedBox.getY(), kickedBox.getWidth(), kickedBox.getHeight());
     }
 }

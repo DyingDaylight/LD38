@@ -14,24 +14,24 @@ public class AnimationCache {
     public static final HashMap<Integer, StateAnimation> FISH_ANIMATION = new HashMap<Integer, StateAnimation>() {{
         put(Player.STAND, new StateAnimation("fish", 3, 0.1f, Animation.PlayMode.LOOP));
         put(Player.FALL, new StateAnimation("fish", 3, 0.1f, Animation.PlayMode.LOOP));
-        put(Player.KICKED, new StateAnimation("fish", 3, 0.1f, Animation.PlayMode.LOOP));
+        put(Player.KICKED, new StateAnimation("fish", 1, 0.2f, Animation.PlayMode.LOOP));
         put(Player.WALK, new StateAnimation("fish", 3, 0.1f, Animation.PlayMode.LOOP));
         put(Player.KICK, new StateAnimation("fish", 3, 0.1f, Animation.PlayMode.LOOP));
     }};
 
     public static final HashMap<Integer, StateAnimation> PLAYER1_ANIMATION = new HashMap<Integer, StateAnimation>() {{
-        put(Player.STAND, new StateAnimation("fish", 3, 0.1f, Animation.PlayMode.LOOP));
-        put(Player.FALL, new StateAnimation("fish", 3, 0.1f, Animation.PlayMode.LOOP));
-        put(Player.KICKED, new StateAnimation("fish", 3, 0.1f, Animation.PlayMode.LOOP));
-        put(Player.WALK, new StateAnimation("fish", 3, 0.1f, Animation.PlayMode.LOOP));
-        put(Player.KICK, new StateAnimation("fish", 3, 0.1f, Animation.PlayMode.LOOP));
+        put(Player.STAND, new StateAnimation("person1-walk", 1, 0, Animation.PlayMode.NORMAL));
+        put(Player.FALL, new StateAnimation("person1-falling", 0, 0, Animation.PlayMode.NORMAL));
+        put(Player.KICKED, new StateAnimation("person1-surprise", 1, 0.2f, Animation.PlayMode.NORMAL));
+        put(Player.WALK, new StateAnimation("person1-walk", 2, 0.1f, Animation.PlayMode.LOOP));
+        put(Player.KICK, new StateAnimation("person1-kick-right-boot", 1, 0.1f, Animation.PlayMode.NORMAL));
     }};
 
     public static final HashMap<Integer, StateAnimation> PLAYER2_ANIMATION = new HashMap<Integer, StateAnimation>() {{
         put(Player.STAND, new StateAnimation("person2-walk", 1, 0, Animation.PlayMode.NORMAL));
         put(Player.FALL, new StateAnimation("person2-falling", 0, 0, Animation.PlayMode.NORMAL));
-        put(Player.KICKED, new StateAnimation("person2-surprise", 1, 0.1f, Animation.PlayMode.NORMAL));
+        put(Player.KICKED, new StateAnimation("person2-surprise", 1, 0.2f, Animation.PlayMode.NORMAL));
         put(Player.WALK, new StateAnimation("person2-walk", 2, 0.1f, Animation.PlayMode.LOOP));
-        put(Player.KICK, new StateAnimation("person2-kick-left-boot", 1, 0.1f, Animation.PlayMode.NORMAL));
+        put(Player.KICK, new StateAnimation("person2-kick-right-boot", 1, 0.1f, Animation.PlayMode.NORMAL));
     }};
 }

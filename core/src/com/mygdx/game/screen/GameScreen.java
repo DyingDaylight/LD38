@@ -76,6 +76,8 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
 
         shapes.begin();
         terrain.debug(shapes);
+        player.debug(shapes);
+        player2.debug(shapes);
         shapes.end();
     }
 
@@ -99,7 +101,7 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
         player.getMovementController().setMovementListener(player);
         players.add(player);
 
-        player2 = new Player(AnimationCache.PLAYER2_ANIMATION);
+        player2 = new Player(AnimationCache.PLAYER1_ANIMATION);
         player2.setMovementController(new InputController2());
         player2.setPlayerEventListener(this);
         x = MathUtils.random(terrain.getLeftCape(), terrain.getRightCape());
@@ -124,8 +126,8 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
     public void kick(Player player) {
         for (Player conterPlayer : players) {
             if (conterPlayer != player) {
-                if (conterPlayer.inRegion(player.getKickRegion())) {
-                    conterPlayer.kicked();
+                if (conterPlayer.inRegion(player.getKickBox())) {
+                    conterPlayer.kicked(player.getKickDirection());
                 }
             }
         }

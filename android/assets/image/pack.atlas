@@ -13,70 +13,91 @@ badlogic
   index: -1
 fish
   rotate: false
-  xy: 262, 185
+  xy: 577, 185
   size: 94, 127
   orig: 94, 127
   offset: 0, 0
   index: 1
 fish
   rotate: false
-  xy: 360, 185
+  xy: 675, 185
   size: 94, 127
   orig: 94, 127
   offset: 0, 0
   index: 2
 fish
   rotate: false
-  xy: 458, 185
+  xy: 773, 185
   size: 94, 127
   orig: 94, 127
   offset: 0, 0
   index: 3
-person2-falling
+person1-falling
   rotate: false
   xy: 262, 316
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: -1
-person2-kick-left
-  rotate: false
-  xy: 472, 316
-  size: 101, 127
-  orig: 101, 127
-  offset: 0, 0
-  index: 1
-person2-kick-left-boot
+person1-kick-right-boot
   rotate: false
   xy: 367, 316
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 1
-person2-kick-right
+person1-surprise
+  rotate: false
+  xy: 472, 316
+  size: 101, 127
+  orig: 101, 127
+  offset: 0, 0
+  index: 1
+person1-walk
   rotate: false
   xy: 577, 316
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
-  index: -1
-person2-surprise
+  index: 1
+person1-walk
   rotate: false
   xy: 682, 316
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
-  index: 1
-person2-walk
+  index: 2
+person2-falling
   rotate: false
   xy: 787, 316
+  size: 101, 127
+  orig: 101, 127
+  offset: 0, 0
+  index: -1
+person2-kick-right-boot
+  rotate: false
+  xy: 892, 316
+  size: 101, 127
+  orig: 101, 127
+  offset: 0, 0
+  index: 1
+person2-surprise
+  rotate: false
+  xy: 262, 185
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 1
 person2-walk
   rotate: false
-  xy: 892, 316
+  xy: 367, 185
+  size: 101, 127
+  orig: 101, 127
+  offset: 0, 0
+  index: 1
+person2-walk
+  rotate: false
+  xy: 472, 185
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
