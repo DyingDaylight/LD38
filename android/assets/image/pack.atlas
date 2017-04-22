@@ -11,13 +11,6 @@ badlogic
   orig: 256, 256
   offset: 0, 0
   index: -1
-terrain
-  rotate: false
-  xy: 262, 315
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
 tile
   rotate: false
   xy: 2, 2

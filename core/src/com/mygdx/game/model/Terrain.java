@@ -19,7 +19,7 @@ public class Terrain {
     private final int HEIGHT = 6;
     private final int OFFSET_X;
     private final int OFFSET_Y;
-    private final int GAP = 10;
+    private final int GAP = 5;
 
     private TextureRegion block;
 
@@ -30,12 +30,12 @@ public class Terrain {
         block = ImageCache.getTexture("tile");
 
         BLOCK_SHIFT = block.getRegionWidth() - BLOCK_WIDTH;
-        BLOCK_DEPTH = block.getRegionHeight() - BLOCK_WIDTH;
+        BLOCK_DEPTH = block.getRegionHeight() - BLOCK_WIDTH + GAP;
 
         collisionPolygon = new Polygon(new float[]{
                 0, BLOCK_WIDTH,
-                BLOCK_WIDTH * WIDTH, BLOCK_WIDTH,
-                WIDTH * BLOCK_WIDTH + HEIGHT * BLOCK_SHIFT, BLOCK_DEPTH * HEIGHT + BLOCK_WIDTH,
+                WIDTH * (BLOCK_WIDTH + GAP), BLOCK_WIDTH,
+                WIDTH * (BLOCK_WIDTH + GAP) + HEIGHT * BLOCK_SHIFT, BLOCK_DEPTH * HEIGHT + BLOCK_WIDTH,
                 HEIGHT * BLOCK_SHIFT, BLOCK_DEPTH * HEIGHT + BLOCK_WIDTH,
         });
         float terrain_width = collisionPolygon.getVertices()[4] - collisionPolygon.getVertices()[0];
@@ -54,7 +54,7 @@ public class Terrain {
     public void draw(Batch batch) {
         for (int i = 0; i < WIDTH; i++) {
             for (int j = HEIGHT-1; j >=0; j--) {
-                int x = i * BLOCK_WIDTH + j * BLOCK_SHIFT + OFFSET_X;
+                int x = i * (BLOCK_WIDTH + GAP) + j * BLOCK_SHIFT + OFFSET_X;
                 int y = j * BLOCK_DEPTH + OFFSET_Y;
                 batch.draw(block, x, y);
             }
