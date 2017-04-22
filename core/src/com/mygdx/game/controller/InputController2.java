@@ -7,7 +7,7 @@ import com.badlogic.gdx.InputAdapter;
 /**
  * Created by kettricken on 22.04.2017.
  */
-public class InputController extends InputAdapter implements MovementController {
+public class InputController2 extends InputAdapter implements MovementController {
 
     MovementListener movementListener;
 
@@ -18,16 +18,16 @@ public class InputController extends InputAdapter implements MovementController 
 
     @Override
     public void progress(float delta) {
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             direction.x = -1;
             direction.y = 0;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.D)){
+        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             direction.x = 1;
             direction.y = 0;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.W)){
+        } else if (Gdx.input.isKeyPressed(Input.Keys.UP)){
             direction.y = 1;
             direction.x = 0;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.S)){
+        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
             direction.y = -1;
             direction.x = 0;
         } else {
@@ -59,9 +59,13 @@ public class InputController extends InputAdapter implements MovementController 
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode){
-            case Input.Keys.SPACE:
-                if (movementListener != null)
+            case Input.Keys.P:
+                System.out.println("P");
+                System.out.println(movementListener);
+                if (movementListener != null) {
+                    System.out.println("Kick 2");
                     movementListener.onKick();
+                }
                 break;
             case Input.Keys.LEFT:
 //                if (movementListener != null)
