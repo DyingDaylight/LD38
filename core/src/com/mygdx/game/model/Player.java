@@ -166,8 +166,6 @@ public class Player extends Sprite implements MovementListener {
     public void fall() {
         if (state == FALL) return;
         setState(FALL);
-        System.out.println(velocity.x + " " + velocity.y);
-        System.out.println(kickedDirection.x + " " + kickedDirection.y);
         if (kickedDirection.x == -1 || kickedDirection.y == 1) {
             behindTerrain = true;
         } else if (kickedDirection.x == 1 || kickedDirection.y == -1){
@@ -183,7 +181,8 @@ public class Player extends Sprite implements MovementListener {
         return collisionPoint.set(getX() + getWidth() / 2, getY());
     }
 
-    public boolean inRegion(Rectangle kickRegion) {
+    public boolean isKicked(Rectangle kickRegion) {
+        getKickedBox();
         return Intersector.intersectRectangles(kickedBox, kickRegion, intersection);
     }
 

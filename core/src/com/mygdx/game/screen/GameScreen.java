@@ -97,12 +97,12 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
         }
         batch.end();
 
-        shapes.begin();
-        terrain.debug(shapes);
-        for (Player player : players) {
-            player.debug(shapes);
-        }
-        shapes.end();
+//        shapes.begin();
+//        terrain.debug(shapes);
+//        for (Player player : players) {
+//            player.debug(shapes);
+//        }
+//        shapes.end();
     }
 
     @Override
@@ -150,7 +150,7 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
     public void kick(Player player) {
         for (Player conterPlayer : players) {
             if (conterPlayer != player) {
-                if (conterPlayer.inRegion(player.getKickBox())) {
+                if (conterPlayer.isKicked(player.getKickBox())) {
                     conterPlayer.kicked(player.getKickDirection());
                 }
             }
