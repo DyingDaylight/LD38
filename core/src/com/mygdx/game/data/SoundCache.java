@@ -13,8 +13,8 @@ public class SoundCache {
      * TODO: put sounds here as constants with names of mp3 without extension
      */
 
-    private static final String SOUND_DIR = "sound/";
-    private static final String SOUND_EXT = ".mp3";
+    private static final String SOUND_DIR = "sfx/";
+    private static final String SOUND_EXT = ".wav";
 
     private static ObjectMap<String, Sound> sounds;
 
@@ -22,9 +22,10 @@ public class SoundCache {
         sounds = new ObjectMap<String, Sound>();
 
         String[] keys = {
-                /**
-                 * TODO: enumerate constants here for loading
-                 */
+                "click",
+                "countdown",
+                "punch",
+                "whoosh"
         };
         for (String key: keys) {
             Sound sound = Gdx.audio.newSound(Gdx.files.internal(SOUND_DIR + key + SOUND_EXT));

@@ -11,6 +11,7 @@ import com.mygdx.game.controller.MovementController;
 import com.mygdx.game.controller.MovementListener;
 import com.mygdx.game.controller.PlayerEventListener;
 import com.mygdx.game.data.ImageCache;
+import com.mygdx.game.data.SoundCache;
 
 import java.util.Map;
 
@@ -208,8 +209,9 @@ public class Player extends Sprite implements MovementListener {
     @Override
     public void onKick() {
         if (!isActive) return;
-        if (state == FALL) return;
+        if (state == FALL || state == WIN) return;
 
+        SoundCache.play("whoosh");
         setState(KICK);
         if (playerEventListener != null) {
             playerEventListener.kick(this);
@@ -239,6 +241,7 @@ public class Player extends Sprite implements MovementListener {
 
     public void kicked(Vector2 kickDirection) {
         setState(KICKED);
+        SoundCache.play("punch");
         movementController.kicked();
         if (kickDirection.x == -1) {
             kickedDirection.x = -700;

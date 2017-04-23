@@ -12,8 +12,8 @@ public class MusicCache {
      * TODO: put melodies here as constants with names of the mp3 without extension
      */
 
-    private static final String MUSIC_DIR = "music/";
-    private static final String MUSIC_EXT = ".mp3";
+    private static final String MUSIC_DIR = "sfx/";
+    private static final String MUSIC_EXT = ".wav";
     private static final float VOLUME = 1f;
 
     private static String key;

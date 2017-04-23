@@ -15,10 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.game.LDGame;
-import com.mygdx.game.data.AnimationCache;
-import com.mygdx.game.data.Configuration;
-import com.mygdx.game.data.ImageCache;
-import com.mygdx.game.data.SkinCache;
+import com.mygdx.game.data.*;
 import com.mygdx.game.model.Player;
 import com.mygdx.game.model.StateAnimation;
 import com.mygdx.game.ui.AnimatedImage;
@@ -120,6 +117,7 @@ public class ChooserScreen extends BaseScreen {
     }
 
     private void previousPlayer() {
+        SoundCache.play("click");
         chosenIndex -= 1;
         if (chosenIndex < 0) {
             chosenIndex = maxPlayers - 1;
@@ -128,6 +126,7 @@ public class ChooserScreen extends BaseScreen {
     }
 
     private void nextPlayer() {
+        SoundCache.play("click");
         chosenIndex += 1;
         if (chosenIndex >= maxPlayers) {
             chosenIndex = 0;

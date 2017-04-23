@@ -1,6 +1,8 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.mygdx.game.data.ImageCache;
 import com.mygdx.game.data.SkinCache;
 import com.mygdx.game.data.SoundCache;
@@ -36,7 +38,10 @@ public class LDGame extends Game {
 	public void setScreen(Screen screen) {
 		Screen old = getScreen();
 		super.setScreen(screen);
-		if (old != null) old.dispose();
+		if (old != null) {
+			old.dispose();
+			SoundCache.play("click");
+		}
 	}
 
 	public void setGameScreen(int chosenPlayerType) {

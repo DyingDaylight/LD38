@@ -18,10 +18,7 @@ import com.mygdx.game.LDGame;
 import com.mygdx.game.controller.AIController;
 import com.mygdx.game.controller.InputController;
 import com.mygdx.game.controller.PlayerEventListener;
-import com.mygdx.game.data.AnimationCache;
-import com.mygdx.game.data.Configuration;
-import com.mygdx.game.data.ImageCache;
-import com.mygdx.game.data.SkinCache;
+import com.mygdx.game.data.*;
 import com.mygdx.game.model.Player;
 import com.mygdx.game.model.Terrain;
 
@@ -64,6 +61,7 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
                 ImageCache.getAtlas());
         ripples.setPosition(getWorldWidth() / 2f, getWorldHeight() / 2f);
 
+        counterImage = new Image();
         winImage = new Image();
         Image restartButton = new Image(ImageCache.getTexture("restart_button"));
         restartButton.addListener(new ClickListener(){
@@ -82,9 +80,9 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
         helpTable.setFillParent(true);
         helpTable.center();
         helpTable.top().left();
-        helpTable.add(helpLabel).pad(10);
+        helpTable.add(helpLabel).pad(10).left();
         helpTable.row();
-        helpTable.add(counterImage);
+        helpTable.add(counterImage).expandX().center().padTop(80);
 
         finalTable = new Table();
         finalTable.setFillParent(true);
@@ -117,6 +115,8 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
 
         generatePlayer(chosenPlayerType);
         generateBots(chosenPlayerType);
+
+        SoundCache.play("countdown");
     }
 
     @Override
@@ -129,14 +129,18 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
 
         if (delay <= DELAY_TIME) {
             delay += delta;
+            if (delay >= DELAY_TIME) {
+                MusicCache.play("soundtrack");
+            }
+
             int count = (int) (DELAY_TIME - delay);
             String name = "";
-            if (count <= 3 && count >= 0) {
-                name = String.format("count%d", count);
+            if (count <= 3 && count > 0) {
+                name = String.format("number%d", count);
             } else {
                 name = "fight";
             }
-            //counterImage.setDrawable(new TextureRegionDrawable(ImageCache.getTexture(name)));
+            counterImage.setDrawable(new TextureRegionDrawable(ImageCache.getTexture(name)));
         } else {
             if (counterImage != null) counterImage.remove();
             update(delta);
@@ -286,5 +290,11 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
             }
         }
         return closestPlayer;
+    }
+
+    @Override
+    public void dispose() {
+        MusicCache.dispose();
+        super.dispose();
     }
 }
