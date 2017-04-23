@@ -26,6 +26,8 @@ public class Player extends Sprite implements MovementListener {
     public static final int KICK = 4;
     public static final int WIN = 5;
 
+    private static final float JUMP_WIN_SPEED = 1000;
+
     private Vector2 collisionPoint;
 
     private MovementController movementController;
@@ -38,6 +40,7 @@ public class Player extends Sprite implements MovementListener {
     private final float gravity = 100;
 
     private int state;
+    private float jumpStartY;
     private float stateTime;
     private boolean flipX = false;
     private boolean behindTerrain = false;
@@ -62,6 +65,13 @@ public class Player extends Sprite implements MovementListener {
         updateState(delta);
 
         if (state == WIN) {
+            if (getY() < jumpStartY) {
+                velocity.y = JUMP_WIN_SPEED;
+                setY(jumpStartY);
+            } else {
+                setY(getY() + velocity.y * delta);
+                velocity.y -= gravity;
+            }
             return;
         }
 
@@ -175,7 +185,7 @@ public class Player extends Sprite implements MovementListener {
     }
 
     public void fall(boolean isBehindTerrain) {
-        if (state == FALL) return;
+        if (state == FALL || state == WIN) return;
         setState(FALL);
         behindTerrain = isBehindTerrain;
     }
@@ -271,6 +281,8 @@ public class Player extends Sprite implements MovementListener {
     }
 
     public void onWin() {
+        if (state == WIN || state == FALL) return;
+        jumpStartY = getY();
         setState(WIN);
     }
 }

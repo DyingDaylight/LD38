@@ -151,7 +151,7 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
                         player.fall(false);
                     }
                 } else {
-                    if (player.getX() > 1500 || player.getX() < -500 || player.getY() > 1000 || player.getY() < -100) {
+                    if (player.getX() > 1500 || player.getX() < -500/* || player.getY() > 1000*/ || player.getY() < -100) {
                         playerIterator.remove();
                     }
                 }
