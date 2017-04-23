@@ -8,4 +8,5 @@ import com.mygdx.game.model.Player;
  */
 public interface PlayerEventListener  {
     public void kick(Player player);
+
 }

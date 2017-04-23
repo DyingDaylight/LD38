@@ -13,93 +13,128 @@ badlogic
   index: -1
 fish
   rotate: false
-  xy: 577, 185
+  xy: 922, 316
   size: 94, 127
   orig: 94, 127
   offset: 0, 0
   index: 1
 fish
   rotate: false
-  xy: 675, 185
+  xy: 613, 53
   size: 94, 127
   orig: 94, 127
   offset: 0, 0
   index: 2
 fish
   rotate: false
-  xy: 773, 185
+  xy: 711, 53
   size: 94, 127
   orig: 94, 127
   offset: 0, 0
   index: 3
 person1-falling
   rotate: false
-  xy: 262, 316
+  xy: 262, 184
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: -1
 person1-kick-right-boot
   rotate: false
-  xy: 367, 316
+  xy: 367, 184
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 1
 person1-surprise
   rotate: false
-  xy: 472, 316
+  xy: 472, 184
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 1
 person1-walk
   rotate: false
-  xy: 577, 316
+  xy: 577, 184
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 1
 person1-walk
   rotate: false
-  xy: 682, 316
+  xy: 682, 184
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 2
 person2-falling
   rotate: false
-  xy: 787, 316
+  xy: 787, 184
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: -1
 person2-kick-right-boot
   rotate: false
-  xy: 892, 316
+  xy: 193, 53
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 1
 person2-surprise
   rotate: false
-  xy: 262, 185
+  xy: 298, 53
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 1
 person2-walk
   rotate: false
-  xy: 367, 185
+  xy: 403, 53
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 1
 person2-walk
   rotate: false
-  xy: 472, 185
+  xy: 508, 53
   size: 101, 127
   orig: 101, 127
+  offset: 0, 0
+  index: 2
+person3-falling
+  rotate: false
+  xy: 262, 315
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+person3-kick-right-boot
+  rotate: false
+  xy: 394, 315
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 1
+person3-surprise
+  rotate: false
+  xy: 526, 315
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 1
+person3-walk
+  rotate: false
+  xy: 658, 315
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 1
+person3-walk
+  rotate: false
+  xy: 790, 315
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: 2
 tile

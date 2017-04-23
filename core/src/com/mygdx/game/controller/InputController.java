@@ -4,12 +4,52 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by kettricken on 22.04.2017.
  */
 public class InputController extends InputAdapter implements MovementController {
 
-    MovementListener movementListener;
+    public static final int TOP = 0;
+    public static final int RIGHT = 1;
+    public static final int DOWN = 2;
+    public static final int LEFT = 3;
+    public static final int KICK = 4;
+
+    private Map<Integer, Integer> keys;
+    private Map<Integer, Integer> actions;
+    private MovementListener movementListener;
+
+    public static InputController getInputControllerArrows() {
+        return new InputController(new HashMap<Integer, Integer>() {{
+            put(TOP, Input.Keys.UP);
+            put(RIGHT, Input.Keys.RIGHT);
+            put(DOWN, Input.Keys.DOWN);
+            put(LEFT, Input.Keys.LEFT);
+            put(KICK, Input.Keys.P);
+        }});
+    }
+
+    public static InputController getInputControllerWasd() {
+        return new InputController(new HashMap<Integer, Integer>() {{
+            put(TOP, Input.Keys.W);
+            put(RIGHT, Input.Keys.D);
+            put(DOWN, Input.Keys.S);
+            put(LEFT, Input.Keys.A);
+            put(KICK, Input.Keys.SPACE);
+        }});
+    }
+
+    public InputController(Map<Integer, Integer> keys) {
+        this.keys = keys;
+
+        actions = new HashMap<Integer, Integer>();
+        for (Map.Entry<Integer, Integer> entry: keys.entrySet()) {
+            actions.put(entry.getValue(), entry.getKey());
+        }
+    }
 
     @Override
     public void setMovementListener(MovementListener movementListener) {
@@ -18,22 +58,24 @@ public class InputController extends InputAdapter implements MovementController 
 
     @Override
     public void progress(float delta) {
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+        if (isKeyPressed(LEFT)) {
             direction.x = -1;
-            direction.y = 0;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.D)){
+        } else if (isKeyPressed(RIGHT)){
             direction.x = 1;
-            direction.y = 0;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.W)){
-            direction.y = 1;
-            direction.x = 0;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.S)){
-            direction.y = -1;
-            direction.x = 0;
         } else {
             direction.x = 0;
+        }
+        if (isKeyPressed(TOP)){
+            direction.y = 1;
+        } else if (isKeyPressed(DOWN)){
+            direction.y = -1;
+        } else {
             direction.y = 0;
         }
+    }
+
+    private boolean isKeyPressed(Integer action) {
+        return Gdx.input.isKeyPressed(keys.get(action));
     }
 
     @Override
@@ -58,19 +100,13 @@ public class InputController extends InputAdapter implements MovementController 
 
     @Override
     public boolean keyDown(int keycode) {
-        switch (keycode){
-            case Input.Keys.SPACE:
+        int action = actions.containsKey(keycode) ? actions.get(keycode) : -1;
+        switch (action){
+            case KICK:
                 if (movementListener != null)
                     movementListener.onKick();
                 break;
-            case Input.Keys.LEFT:
-//                if (movementListener != null)
-//                    movementListener.onLeftLegJump();
-                break;
-            case Input.Keys.RIGHT:
-//                if (movementListener != null)
-//                    movementListener.onRightLegJump();
-                break;
+
             default:
                 break;
         }

@@ -34,4 +34,12 @@ public class AnimationCache {
         put(Player.WALK, new StateAnimation("person2-walk", 2, 0.1f, Animation.PlayMode.LOOP));
         put(Player.KICK, new StateAnimation("person2-kick-right-boot", 1, 0.1f, Animation.PlayMode.NORMAL));
     }};
+
+    public static final HashMap<Integer, StateAnimation> PLAYER3_ANIMATION = new HashMap<Integer, StateAnimation>() {{
+        put(Player.STAND, new StateAnimation("person3-walk", 1, 0, Animation.PlayMode.NORMAL));
+        put(Player.FALL, new StateAnimation("person3-falling", 0, 0, Animation.PlayMode.NORMAL));
+        put(Player.KICKED, new StateAnimation("person3-surprise", 1, 0.2f, Animation.PlayMode.NORMAL));
+        put(Player.WALK, new StateAnimation("person3-walk", 2, 0.1f, Animation.PlayMode.LOOP));
+        put(Player.KICK, new StateAnimation("person3-kick-right-boot", 1, 0.1f, Animation.PlayMode.NORMAL));
+    }};
 }

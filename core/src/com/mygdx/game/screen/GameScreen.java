@@ -5,9 +5,9 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.LDGame;
 import com.mygdx.game.controller.InputController;
-import com.mygdx.game.controller.InputController2;
 import com.mygdx.game.controller.PlayerEventListener;
 import com.mygdx.game.data.AnimationCache;
 import com.mygdx.game.model.Player;
@@ -42,7 +42,7 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer(stage());
         inputMultiplexer.addProcessor((InputController) player.getMovementController());
-        inputMultiplexer.addProcessor((InputController2) player2.getMovementController());
+        inputMultiplexer.addProcessor((InputController) player2.getMovementController());
         inputMultiplexer.addProcessor(new InputAdapter() {
             @Override
             public boolean keyUp(int keycode) {
@@ -97,12 +97,12 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
         }
         batch.end();
 
-//        shapes.begin();
-//        terrain.debug(shapes);
-//        for (Player player : players) {
-//            player.debug(shapes);
-//        }
-//        shapes.end();
+        shapes.begin();
+        terrain.debug(shapes);
+        for (Player player : players) {
+            player.debug(shapes);
+        }
+        shapes.end();
     }
 
     @Override
@@ -117,7 +117,7 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
 
     private void generatePlayer() {
         player = new Player(AnimationCache.FISH_ANIMATION);
-        player.setMovementController(new InputController());
+        player.setMovementController(InputController.getInputControllerArrows());
         player.setPlayerEventListener(this);
         float x = MathUtils.random(terrain.getLeftCape(), terrain.getRightCape());
         float y = MathUtils.random(terrain.getBottomCape(), terrain.getTopCape());
@@ -126,7 +126,8 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
         players.add(player);
 
         player2 = new Player(AnimationCache.PLAYER1_ANIMATION);
-        player2.setMovementController(new InputController2());
+        player2.setMovementController(InputController.getInputControllerWasd());
+        //player2.setMovementController(new AIController(this, player2));
         player2.setPlayerEventListener(this);
         x = MathUtils.random(terrain.getLeftCape(), terrain.getRightCape());
         y = MathUtils.random(terrain.getBottomCape(), terrain.getTopCape());
@@ -136,13 +137,16 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
     }
 
     private void update(float delta) {
-        player.update(delta);
-        player2.update(delta);
-        if (! terrain.contains(player)) {
-            player.fall();
-        }
-        if (! terrain.contains(player2)) {
-            player2.fall();
+        for (Player player : players) {
+            player.update(delta);
+            if (! terrain.contains(player)) {
+                if (player.getCollisionPoint().y > terrain.getTopCape() || player.getCollisionPoint().x < terrain.getLeftCape()) {
+                    player.fall(true);
+                } else if (player.getCollisionPoint().y < terrain.getBottomCape() || player.getCollisionPoint().x > terrain.getRightCape()) {
+                    player.fall(false);
+                }
+
+            }
         }
     }
 
@@ -155,5 +159,19 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
                 }
             }
         }
+    }
+
+    public Player getClosestPlayer(Player player) {
+        float distance = Float.MAX_VALUE;
+        Player closestPlayer = null;
+        for (Player p : players) {
+            if (p == player) continue;
+            float d = Vector2.dst(player.getX(), player.getY(), p.getX(), p.getY());
+            if (d < distance) {
+                distance = d;
+                closestPlayer = p;
+            }
+        }
+        return closestPlayer;
     }
 }

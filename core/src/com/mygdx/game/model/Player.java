@@ -74,31 +74,33 @@ public class Player extends Sprite implements MovementListener {
             if (movementController.isMovingLeft()) {
                 if (state == STAND) setState(WALK);
                 velocity.x = -speed.x;
-                velocity.y = 0;
-                kickDirection.set(-1, 0);
                 flipX = true;
             } else if (movementController.isMovingRight()) {
                 if (state == STAND) setState(WALK);
                 velocity.x = speed.x;
-                velocity.y = 0;
-                kickDirection.set(1, 0);
                 flipX = false;
-            } else if (movementController.isMovingUp()) {
+            } else {
+                velocity.x = 0;
+            }
+
+            if (movementController.isMovingUp()) {
                 if (state == STAND) setState(WALK);
                 velocity.y = speed.y;
-                velocity.x = 0;
-                kickDirection.set(0, 1);
-                flipX = true;
+                if (velocity.x == 0) flipX = true;
             } else if (movementController.isMovingDown()) {
                 if (state == STAND) setState(WALK);
                 velocity.y = -speed.y;
-                velocity.x = 0;
-                kickDirection.set(0, -1);
-                flipX = false;
+                if (velocity.x == 0) flipX = false;
             } else {
-                if (state == WALK) setState(STAND);
-                velocity.x = 0;
                 velocity.y = 0;
+            }
+
+            if (velocity.x == 0 && velocity.y == 0) {
+                if (state == WALK) setState(STAND);
+            } else {
+                kickDirection.x = (velocity.x > 0 ? 1 : (velocity.x < 0 ? -1 : 0));
+                kickDirection.y = (velocity.y > 0 ? 1 : (velocity.y < 0 ? -1 : 0));
+                System.out.println(kickDirection.x + " " + kickDirection.y);
             }
         }
 
@@ -136,6 +138,8 @@ public class Player extends Sprite implements MovementListener {
         StateAnimation animation = getCurrentAnimation();
         if (animation.isAnimated() && animation.isAnimationFinished(stateTime)) {
             if (state == KICKED) {
+                kickedDirection.x = 0;
+                kickedDirection.y = 0;
                 setState(STAND);
             } else if (state == KICK) {
                 setState(STAND);
@@ -163,18 +167,10 @@ public class Player extends Sprite implements MovementListener {
         return playerEventListener;
     }
 
-    public void fall() {
+    public void fall(boolean isBehindTerrain) {
         if (state == FALL) return;
         setState(FALL);
-        if (kickedDirection.x == -1 || kickedDirection.y == 1) {
-            behindTerrain = true;
-        } else if (kickedDirection.x == 1 || kickedDirection.y == -1){
-            behindTerrain = false;
-        } else if (velocity.x > 0 || velocity.y < 0) {
-            behindTerrain = false;
-        } else if (velocity.x < 0 || velocity.y > 0) {
-            behindTerrain = true;
-        }
+        behindTerrain = isBehindTerrain;
     }
 
     public Vector2 getCollisionPoint() {
@@ -182,6 +178,7 @@ public class Player extends Sprite implements MovementListener {
     }
 
     public boolean isKicked(Rectangle kickRegion) {
+        if (state == FALL) return false;
         getKickedBox();
         return Intersector.intersectRectangles(kickedBox, kickRegion, intersection);
     }
@@ -192,6 +189,8 @@ public class Player extends Sprite implements MovementListener {
 
     @Override
     public void onKick() {
+        if (state == FALL) return;
+
         setState(KICK);
         if (playerEventListener != null) {
             playerEventListener.kick(this);
@@ -203,13 +202,16 @@ public class Player extends Sprite implements MovementListener {
     }
 
     public Rectangle getKickBox() {
+        //TODO
+        kickBox.set(0, 0, 1, 1);
         if (kickDirection.x == -1) {
-            return kickBox.set(getX() + 13, getY(), 30, 30);
+            kickBox.set(getX() + 13, getY(), 30, 30);
         } else if (kickDirection.x == 1) {
             return kickBox.set(getX() + getRegionWidth() - 50, getY(), 30, 30);
         } else {
             return kickBox.set(getX() + getRegionWidth() / 2 - 20, getY(), getRegionWidth() / 2 - 10, 20);
         }
+        return kickBox;
     }
 
 
@@ -221,20 +223,22 @@ public class Player extends Sprite implements MovementListener {
         setState(KICKED);
         if (kickDirection.x == -1) {
             kickedDirection.x = -700;
-            kickedDirection.y = 0;
             flipX = true;
         } else if (kickDirection.x == 1) {
             kickedDirection.x = 700;
-            kickedDirection.y = 0;
             flipX = false;
-        } else if (kickDirection.y == 1) {
-            kickedDirection.x = 0;
+        } else {
+            kickDirection.x = 0;
+        }
+
+        if (kickDirection.y == 1) {
             kickedDirection.y = 700;
-            flipX = false;
+            if (kickDirection.x == 0) flipX = false;
         } else if (kickDirection.y == -1) {
-            kickedDirection.x = 0;
             kickedDirection.y = -700;
-            flipX = true;
+            if (kickDirection.x == 0) flipX = true;
+        } else {
+            kickedDirection.y = 0;
         }
     }
 
@@ -250,4 +254,5 @@ public class Player extends Sprite implements MovementListener {
     public boolean isBehindTerrain() {
         return behindTerrain;
     }
+
 }

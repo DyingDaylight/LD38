@@ -63,6 +63,10 @@ public class Terrain {
     public void debug(ShapeRenderer shapeRenderer) {
         shapeRenderer.setColor(1, 0, 0, 1);
         shapeRenderer.polygon(collisionPolygon.getVertices());
+        shapeRenderer.line(getLeftCape(), 0, getLeftCape(), 720);
+        shapeRenderer.line(getRightCape(), 0, getRightCape(), 720);
+        shapeRenderer.line(0, getTopCape(), 1280, getTopCape());
+        shapeRenderer.line(0, getBottomCape(), 1280, getBottomCape());
     }
 
     public boolean contains(Player player) {
@@ -72,7 +76,7 @@ public class Terrain {
     }
 
     public int getLeftCape() {
-        return (int) (collisionPolygon.getX() + HEIGHT * BLOCK_SHIFT);
+        return (int) (collisionPolygon.getVertices()[6]);
     }
 
     public int getRightCape() {
@@ -86,4 +90,6 @@ public class Terrain {
     public int getTopCape() {
         return (int) collisionPolygon.getVertices()[7];
     }
+
+
 }
