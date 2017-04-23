@@ -4,6 +4,7 @@ import com.badlogic.gdx.*;
 import com.mygdx.game.data.ImageCache;
 import com.mygdx.game.data.SkinCache;
 import com.mygdx.game.data.SoundCache;
+import com.mygdx.game.screen.ChooserScreen;
 import com.mygdx.game.screen.GameScreen;
 import com.mygdx.game.screen.MenuScreen;
 
@@ -15,8 +16,8 @@ public class LDGame extends Game {
 		SkinCache.load();
 		SoundCache.load();
 		Gdx.input.setCatchBackKey(true);
-		//setMenuScreen();
-		setGameScreen();
+		setMenuScreen();
+		//setGameScreen();
 	}
 
 	@Override
@@ -38,22 +39,13 @@ public class LDGame extends Game {
 		if (old != null) old.dispose();
 	}
 
-	public void setGameScreen() {
-		setScreen(new GameScreen(this));
-
-        InputMultiplexer multiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
-        multiplexer.addProcessor(new InputAdapter() {
-            @Override
-            public boolean keyUp(int keycode) {
-                if (keycode == Input.Keys.R) {
-                    setGameScreen();
-                }
-                return super.keyUp(keycode);
-            }
-        });
-        Gdx.input.setInputProcessor(multiplexer);
+	public void setGameScreen(int chosenPlayerType) {
+		setScreen(new GameScreen(this, chosenPlayerType));
 	}
 	public void setMenuScreen() {
 		setScreen(new MenuScreen(this));
+	}
+	public void setChooserScreen() {
+		setScreen(new ChooserScreen(this));
 	}
 }

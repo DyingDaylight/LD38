@@ -28,7 +28,7 @@ public class InputController extends InputAdapter implements MovementController 
             put(RIGHT, Input.Keys.RIGHT);
             put(DOWN, Input.Keys.DOWN);
             put(LEFT, Input.Keys.LEFT);
-            put(KICK, Input.Keys.P);
+            put(KICK, Input.Keys.SPACE);
         }});
     }
 
@@ -38,7 +38,7 @@ public class InputController extends InputAdapter implements MovementController 
             put(RIGHT, Input.Keys.D);
             put(DOWN, Input.Keys.S);
             put(LEFT, Input.Keys.A);
-            put(KICK, Input.Keys.SPACE);
+            put(KICK, Input.Keys.P);
         }});
     }
 

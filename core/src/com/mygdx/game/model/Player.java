@@ -44,6 +44,7 @@ public class Player extends Sprite implements MovementListener {
     private float stateTime;
     private boolean flipX = false;
     private boolean behindTerrain = false;
+    private boolean isActive = false;
 
     private Rectangle intersection = new Rectangle();
     private Map<Integer, StateAnimation> animations;
@@ -206,6 +207,7 @@ public class Player extends Sprite implements MovementListener {
 
     @Override
     public void onKick() {
+        if (!isActive) return;
         if (state == FALL) return;
 
         setState(KICK);
@@ -284,5 +286,9 @@ public class Player extends Sprite implements MovementListener {
         if (state == WIN || state == FALL) return;
         jumpStartY = getY();
         setState(WIN);
+    }
+
+    public void setActive(boolean active) {
+        this.isActive = active;
     }
 }

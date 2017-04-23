@@ -1,16 +1,27 @@
 package com.mygdx.game.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.game.LDGame;
 import com.mygdx.game.controller.AIController;
 import com.mygdx.game.controller.InputController;
 import com.mygdx.game.controller.PlayerEventListener;
 import com.mygdx.game.data.AnimationCache;
+import com.mygdx.game.data.Configuration;
+import com.mygdx.game.data.ImageCache;
+import com.mygdx.game.data.SkinCache;
 import com.mygdx.game.model.Player;
 import com.mygdx.game.model.Terrain;
 
@@ -24,53 +35,112 @@ import java.util.Iterator;
  */
 public class GameScreen extends BaseScreen implements PlayerEventListener {
 
+    private static final float DELAY_TIME = 4;
 
+    private float delay = 0.0f;
+
+    private InputMultiplexer inputMultiplexer;
+
+    private ParticleEffect ripples;
     private Terrain terrain;
     private Player player;
-    private Player player2;
+    private ArrayList<Player> players = new ArrayList();
+    private int chosenPlayerType;
 
-    ArrayList<Player> players = new ArrayList();
+    private Table finalTable;
+    private Table helpTable;
+    private Image winImage;
+    private Image counterImage;
 
-    public GameScreen(LDGame game) {
+    private boolean isGameFinished = false;
+
+    public GameScreen(LDGame game, final int chosenPlayerType) {
         super(game);
         terrain = new Terrain();
+        this.chosenPlayerType = chosenPlayerType;
+
+        ripples = new ParticleEffect();
+        ripples.load(Gdx.files.internal("fx/ripples.particle"),
+                ImageCache.getAtlas());
+        ripples.setPosition(getWorldWidth() / 2f, getWorldHeight() / 2f);
+
+        winImage = new Image();
+        Image restartButton = new Image(ImageCache.getTexture("restart_button"));
+        restartButton.addListener(new ClickListener(){
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                super.touchUp(event, x, y, pointer, button);
+                getGame().setGameScreen(chosenPlayerType);
+            }
+        });
+
+
+        Label helpLabel = new Label(Configuration.HELP_TEXT, SkinCache.getDefaultSkin());
+        helpLabel.setFontScale(0.5f);
+
+        helpTable = new Table();
+        helpTable.setFillParent(true);
+        helpTable.center();
+        helpTable.top().left();
+        helpTable.add(helpLabel).pad(10);
+        helpTable.row();
+        helpTable.add(counterImage);
+
+        finalTable = new Table();
+        finalTable.setFillParent(true);
+        finalTable.center();
+        finalTable.add(winImage).center().padBottom(50);
+        finalTable.row();
+        finalTable.add(restartButton).center();
+        finalTable.setVisible(false);
+        stage.addActor(finalTable);
+        stage.addActor(helpTable);
     }
 
     @Override
     public void show() {
         super.show();
 
-        generatePlayer();
-
-        InputMultiplexer inputMultiplexer = new InputMultiplexer(stage());
-        inputMultiplexer.addProcessor((InputController) player.getMovementController());
-//        inputMultiplexer.addProcessor((InputController) player2.getMovementController());
+        inputMultiplexer = new InputMultiplexer(stage());
         inputMultiplexer.addProcessor(new InputAdapter() {
             @Override
             public boolean keyUp(int keycode) {
-//                if (keycode == Input.Keys.ESCAPE) {
-//                    if (isPlayable()) {
-//                        pauseGame();
-//                    } else {
-//                        unpauseGame();
-//                    }
-//                } else if (keycode == Input.Keys.ENTER) {
-//                    if (!isPlayable()) getGame().setGameScreen();
-//                }
+                if (keycode == Input.Keys.R || (keycode == Input.Keys.ENTER && isGameFinished)) {
+                    getGame().setGameScreen(chosenPlayerType);
+                } else if (keycode == Input.Keys.ESCAPE) {
+                    getGame().setChooserScreen();
+                }
                 return super.keyUp(keycode);
             }
         });
         Gdx.input.setInputProcessor(inputMultiplexer);
+
+        generatePlayer(chosenPlayerType);
+        generateBots(chosenPlayerType);
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
 
-        Gdx.gl20.glClearColor(0.75f, 0.75f, 1, 1);
+//        Gdx.gl20.glClearColor(0.75f, 0.75f, 1, 1);
+        Gdx.gl20.glClearColor(Configuration.BKG_R, Configuration.BKG_G, Configuration.BKG_B, 1);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        update(delta);
+        if (delay <= DELAY_TIME) {
+            delay += delta;
+            int count = (int) (DELAY_TIME - delay);
+            String name = "";
+            if (count <= 3 && count >= 0) {
+                name = String.format("count%d", count);
+            } else {
+                name = "fight";
+            }
+            //counterImage.setDrawable(new TextureRegionDrawable(ImageCache.getTexture(name)));
+        } else {
+            if (counterImage != null) counterImage.remove();
+            update(delta);
+        }
 
         Collections.sort(players, new Comparator<Player>() {
             @Override
@@ -85,7 +155,10 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
             }
         });
 
+        ripples.update(delta);
+
         batch.begin();
+        ripples.draw(batch);
         for (Player player : players) {
             if (player.isBehindTerrain()) {
                 player.draw(batch);
@@ -99,12 +172,14 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
         }
         batch.end();
 
-        shapes.begin();
-        terrain.debug(shapes);
-        for (Player player : players) {
-            player.debug(shapes);
-        }
-        shapes.end();
+//        shapes.begin();
+//        terrain.debug(shapes);
+//        for (Player player : players) {
+//            player.debug(shapes);
+//        }
+//        shapes.end();
+
+        stage.draw();
     }
 
     @Override
@@ -117,31 +192,45 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
 
     }
 
-    private void generatePlayer() {
-        player = new Player(AnimationCache.FISH_ANIMATION);
+    private void generatePlayer(int chosenPlayerType) {
+        player = new Player(AnimationCache.PLAYER_ANIMATION.get(chosenPlayerType));
         player.setMovementController(InputController.getInputControllerArrows());
         player.setPlayerEventListener(this);
-        float x = MathUtils.random(terrain.getLeftCape(), terrain.getRightCape());
-        float y = MathUtils.random(terrain.getBottomCape(), terrain.getTopCape());
+        float x = MathUtils.random(terrain.getLeftCape(), terrain.getRightCape() - player.getWidth());
+        float y = MathUtils.random(terrain.getBottomCape(), terrain.getTopCape() - player.getHeight() / 2);
         player.setPosition(x, y);
         player.getMovementController().setMovementListener(player);
+        inputMultiplexer.addProcessor((InputController) player.getMovementController());
         players.add(player);
+    }
 
-        player2 = new Player(AnimationCache.PLAYER1_ANIMATION);
-        //player2.setMovementController(InputController.getInputControllerWasd());
-        player2.setMovementController(new AIController(this, player2));
-        player2.setPlayerEventListener(this);
-        x = MathUtils.random(terrain.getLeftCape(), terrain.getRightCape());
-        y = MathUtils.random(terrain.getBottomCape(), terrain.getTopCape());
-        player2.setPosition(x, y);
-        player2.getMovementController().setMovementListener(player2);
-        players.add(player2);
+    private void generateBots(int chosenPlayerType) {
+        int amount = MathUtils.random(2, 10);
+        for (int i = 0; i < amount; i++) {
+            int type;
+            do {
+                type = MathUtils.random(0, 3);
+            } while(type == chosenPlayerType);
+            players.add(generateBot(type));
+        }
+    }
+
+    private Player generateBot(int type) {
+        Player player = new Player(AnimationCache.PLAYER_ANIMATION.get(type));
+        player.setMovementController(new AIController(this, player));
+        player.getMovementController().setMovementListener(player);
+        player.setPlayerEventListener(this);
+        float x = MathUtils.random(terrain.getLeftCape(), terrain.getRightCape() - player.getWidth());
+        float y = MathUtils.random(terrain.getBottomCape(), terrain.getTopCape()- player.getHeight() / 2);
+        player.setPosition(x, y);
+        return player;
     }
 
     private void update(float delta) {
         Iterator<Player> playerIterator = players.iterator();
         while (playerIterator.hasNext()) {
             Player player = playerIterator.next();
+            player.setActive(true);
             player.update(delta);
             if (! terrain.contains(player)) {
                 if (player.isAlive()) {
@@ -151,25 +240,35 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
                         player.fall(false);
                     }
                 } else {
-                    if (player.getX() > 1500 || player.getX() < -500/* || player.getY() > 1000*/ || player.getY() < -100) {
+                    if (player.getX() > 1500 || player.getX() < -500 || player.getY() < -100) {
+                        if (player == this.player) {
+                            if (!isGameFinished) winImage.setDrawable(new TextureRegionDrawable(ImageCache.getTexture("game_over")));
+                            this.player = null;
+                            this.isGameFinished = true;
+                            this.finalTable.setVisible(true);
+                        }
                         playerIterator.remove();
                     }
                 }
             }
         }
 
-        if (players.size() == 1) {
+        if (players.size() == 1 ) {
+            if (player != null && !isGameFinished) {
+                winImage.setDrawable(new TextureRegionDrawable(ImageCache.getTexture("nice")));
+            }
             players.get(0).onWin();
-            // TODO implement win screen
+            isGameFinished = true;
+            finalTable.setVisible(true);
         }
     }
 
     @Override
     public void kick(Player player) {
-        for (Player conterPlayer : players) {
-            if (conterPlayer != player) {
-                if (conterPlayer.isKicked(player.getKickBox())) {
-                    conterPlayer.kicked(player.getKickDirection());
+        for (Player counterPlayer : players) {
+            if (counterPlayer != player) {
+                if (counterPlayer.isKicked(player.getKickBox())) {
+                    counterPlayer.kicked(player.getKickDirection());
                 }
             }
         }

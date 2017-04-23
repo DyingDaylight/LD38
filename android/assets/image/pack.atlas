@@ -6,204 +6,294 @@ filter: Nearest,Nearest
 repeat: none
 badlogic
   rotate: false
-  xy: 2, 636
+  xy: 408, 594
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 fish
   rotate: false
-  xy: 107, 4
+  xy: 861, 52
   size: 94, 127
   orig: 94, 127
   offset: 0, 0
   index: 1
-fish
-  rotate: false
-  xy: 193, 505
-  size: 94, 127
-  orig: 94, 127
-  offset: 0, 0
-  index: 2
-fish
-  rotate: false
-  xy: 193, 374
-  size: 94, 127
-  orig: 94, 127
-  offset: 0, 0
-  index: 3
 fish-kick-right
   rotate: false
-  xy: 107, 135
+  xy: 327, 133
   size: 94, 127
   orig: 94, 127
   offset: 0, 0
   index: 1
+game_over
+  rotate: false
+  xy: 2, 712
+  size: 402, 309
+  orig: 402, 309
+  offset: 0, 0
+  index: -1
+info-button
+  rotate: false
+  xy: 107, 244
+  size: 109, 72
+  orig: 109, 72
+  offset: 0, 0
+  index: -1
+left_button
+  rotate: false
+  xy: 530, 13
+  size: 109, 72
+  orig: 109, 72
+  offset: 0, 0
+  index: -1
+nice
+  rotate: false
+  xy: 408, 854
+  size: 476, 167
+  orig: 476, 167
+  offset: 0, 0
+  index: -1
+number1
+  rotate: false
+  xy: 859, 538
+  size: 146, 219
+  orig: 146, 219
+  offset: 0, 0
+  index: -1
+number2
+  rotate: false
+  xy: 859, 315
+  size: 146, 219
+  orig: 146, 219
+  offset: 0, 0
+  index: -1
+number3
+  rotate: false
+  xy: 575, 261
+  size: 146, 219
+  orig: 146, 219
+  offset: 0, 0
+  index: -1
 person1-falling
   rotate: false
-  xy: 291, 580
+  xy: 107, 320
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: -1
 person1-happy
   rotate: false
-  xy: 291, 449
+  xy: 220, 264
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 1
 person1-happy
   rotate: false
-  xy: 396, 580
+  xy: 222, 133
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 2
 person1-kick-right-boot
   rotate: false
-  xy: 396, 449
+  xy: 2, 13
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 1
 person1-surprise
   rotate: false
-  xy: 501, 633
+  xy: 107, 13
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 1
 person1-walk
   rotate: false
-  xy: 501, 502
+  xy: 325, 264
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 1
 person1-walk
   rotate: false
-  xy: 606, 633
+  xy: 430, 278
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 2
 person2-falling
   rotate: false
-  xy: 606, 502
+  xy: 430, 147
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: -1
 person2-happy
   rotate: false
-  xy: 711, 633
+  xy: 535, 130
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 1
 person2-happy
   rotate: false
-  xy: 711, 502
+  xy: 425, 16
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 2
 person2-kick-right-boot
   rotate: false
-  xy: 816, 633
+  xy: 212, 2
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 1
 person2-surprise
   rotate: false
-  xy: 921, 633
+  xy: 317, 2
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 1
 person2-walk
   rotate: false
-  xy: 816, 502
+  xy: 640, 89
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 1
 person2-walk
   rotate: false
-  xy: 921, 502
+  xy: 756, 52
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 2
 person3-falling
   rotate: false
-  xy: 453, 764
+  xy: 888, 893
   size: 101, 128
   orig: 101, 128
   offset: 0, 0
   index: -1
 person3-happy
   rotate: false
-  xy: 2, 134
+  xy: 888, 761
   size: 101, 128
   orig: 101, 128
   offset: 0, 0
   index: 1
 person3-happy
   rotate: false
-  xy: 558, 764
+  xy: 725, 352
   size: 101, 128
   orig: 101, 128
   offset: 0, 0
   index: 2
 person3-kick-right-boot
   rotate: false
-  xy: 2, 2
+  xy: 725, 220
   size: 101, 128
   orig: 101, 128
   offset: 0, 0
   index: 1
 person3-surprise
   rotate: false
-  xy: 663, 764
+  xy: 830, 183
   size: 101, 128
   orig: 101, 128
   offset: 0, 0
   index: 1
 person3-walk
   rotate: false
-  xy: 768, 764
+  xy: 222, 395
   size: 101, 128
   orig: 101, 128
   offset: 0, 0
   index: 1
 person3-walk
   rotate: false
-  xy: 873, 764
+  xy: 2, 319
   size: 101, 128
   orig: 101, 128
   offset: 0, 0
   index: 2
-tile
+restart_button
   rotate: false
-  xy: 2, 451
+  xy: 2, 144
+  size: 216, 72
+  orig: 216, 72
+  offset: 0, 0
+  index: -1
+right_button
+  rotate: false
+  xy: 643, 13
+  size: 109, 72
+  orig: 109, 72
+  offset: 0, 0
+  index: -1
+ripples
+  rotate: false
+  xy: 668, 669
   size: 187, 181
   orig: 187, 181
   offset: 0, 0
   index: -1
+start_button
+  rotate: false
+  xy: 2, 451
+  size: 216, 72
+  orig: 216, 72
+  offset: 0, 0
+  index: -1
 tile1
   rotate: false
-  xy: 262, 711
+  xy: 668, 484
+  size: 187, 181
+  orig: 187, 181
+  offset: 0, 0
+  index: -1
+tile1_bkp
+  rotate: false
+  xy: 193, 527
   size: 187, 181
   orig: 187, 181
   offset: 0, 0
   index: -1
 tile2
   rotate: false
-  xy: 2, 266
+  xy: 2, 527
   size: 187, 181
   orig: 187, 181
   offset: 0, 0
   index: -1
+tile2_bkp
+  rotate: false
+  xy: 384, 409
+  size: 187, 181
+  orig: 187, 181
+  offset: 0, 0
+  index: -1
+
+pack2.png
+size: 256,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+fish
+  rotate: false
+  xy: 2, 2
+  size: 94, 127
+  orig: 94, 127
+  offset: 0, 0
+  index: 2
+fish
+  rotate: false
+  xy: 100, 2
+  size: 94, 127
+  orig: 94, 127
+  offset: 0, 0
+  index: 3

@@ -5,12 +5,13 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.LDGame;
-import com.mygdx.game.data.ImageCache;
+import com.mygdx.game.data.Configuration;
 
 /**
  * Created by kettricken on 21.04.2017.
@@ -27,23 +28,19 @@ public class MenuScreen extends BaseScreen {
     public void show() {
         super.show();
 
-        final Image title = new Image(ImageCache.getTexture("badlogic"));
+        final Image title = new Image(new Texture(Gdx.files.internal("image/title.png")));
         title.addListener(new ClickListener(){
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-                getGame().setGameScreen();
+                getGame().setChooserScreen();
             }
         });
 
         table = new Table();
         table.left().top();
         table.setFillParent(true);
-        table.padLeft(50);
-        table.padTop(100);
-        table.add(title).center().left();
-        //table.row();
-        //table.add(play);
+        table.add(title).center();
         stage().addActor(table);
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer(stage());
@@ -53,7 +50,7 @@ public class MenuScreen extends BaseScreen {
                 if (keycode == Input.Keys.ESCAPE) {
                     Gdx.app.exit();
                 } else if (keycode == Input.Keys.ENTER) {
-                    getGame().setGameScreen();
+                    getGame().setChooserScreen();
                 }
                 return super.keyUp(keycode);
             }
@@ -65,7 +62,7 @@ public class MenuScreen extends BaseScreen {
     public void render(float delta) {
         super.render(delta);
 
-        Gdx.gl20.glClearColor(0f, 0f, 0, 1);
+        Gdx.gl20.glClearColor(Configuration.BKG_R, Configuration.BKG_G, Configuration.BKG_B, 1);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         stage().draw();

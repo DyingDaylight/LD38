@@ -33,4 +33,7 @@ public class ImageCache {
         return regions;
     }
 
+    public static TextureAtlas getAtlas() {
+        return atlas;
+    }
 }
