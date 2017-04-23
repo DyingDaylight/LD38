@@ -1,9 +1,9 @@
 package com.mygdx.game.model;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.mygdx.game.data.Configuration;
 import com.mygdx.game.data.ImageCache;
@@ -22,16 +22,14 @@ public class Terrain {
     private final int OFFSET_Y;
     private final int GAP = 5;
 
-    private TextureRegion block;
-
     private Polygon collisionPolygon;
+
+    private String[] tileNames = new String[WIDTH * HEIGHT];
 
     public Terrain() {
 
-        block = ImageCache.getTexture("tile");
-
-        BLOCK_SHIFT = block.getRegionWidth() - BLOCK_WIDTH;
-        BLOCK_DEPTH = block.getRegionHeight() - BLOCK_WIDTH + GAP;
+        BLOCK_SHIFT = ImageCache.getTexture("tile2").getRegionWidth() - BLOCK_WIDTH;
+        BLOCK_DEPTH = ImageCache.getTexture("tile2").getRegionHeight() - BLOCK_WIDTH + GAP;
 
         collisionPolygon = new Polygon(new float[]{
                 0, BLOCK_WIDTH,
@@ -48,6 +46,15 @@ public class Terrain {
             collisionPolygon.getVertices()[i] = collisionPolygon.getVertices()[i] + OFFSET_X;
             collisionPolygon.getVertices()[i+1] = collisionPolygon.getVertices()[i+1] + OFFSET_Y;
         }
+
+        generateTiles();
+    }
+
+    private void generateTiles() {
+        for (int i = 0; i < WIDTH * HEIGHT; i++) {
+            int index = MathUtils.random(1, 2);
+            tileNames[i] = String.format("tile%d", index);
+        }
     }
 
     public void draw(Batch batch) {
@@ -55,7 +62,8 @@ public class Terrain {
             for (int j = HEIGHT-1; j >=0; j--) {
                 int x = i * (BLOCK_WIDTH + GAP) + j * BLOCK_SHIFT + OFFSET_X;
                 int y = j * BLOCK_DEPTH + OFFSET_Y;
-                batch.draw(block, x, y);
+                int k = j * WIDTH + i;
+                batch.draw(ImageCache.getTexture(tileNames[k]), x, y);
             }
         }
     }

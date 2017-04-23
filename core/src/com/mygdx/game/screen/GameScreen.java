@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.LDGame;
+import com.mygdx.game.controller.AIController;
 import com.mygdx.game.controller.InputController;
 import com.mygdx.game.controller.PlayerEventListener;
 import com.mygdx.game.data.AnimationCache;
@@ -16,6 +17,7 @@ import com.mygdx.game.model.Terrain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 
 /**
  * Created by kettricken on 21.04.2017.
@@ -42,7 +44,7 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer(stage());
         inputMultiplexer.addProcessor((InputController) player.getMovementController());
-        inputMultiplexer.addProcessor((InputController) player2.getMovementController());
+//        inputMultiplexer.addProcessor((InputController) player2.getMovementController());
         inputMultiplexer.addProcessor(new InputAdapter() {
             @Override
             public boolean keyUp(int keycode) {
@@ -126,8 +128,8 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
         players.add(player);
 
         player2 = new Player(AnimationCache.PLAYER1_ANIMATION);
-        player2.setMovementController(InputController.getInputControllerWasd());
-        //player2.setMovementController(new AIController(this, player2));
+        //player2.setMovementController(InputController.getInputControllerWasd());
+        player2.setMovementController(new AIController(this, player2));
         player2.setPlayerEventListener(this);
         x = MathUtils.random(terrain.getLeftCape(), terrain.getRightCape());
         y = MathUtils.random(terrain.getBottomCape(), terrain.getTopCape());
@@ -137,16 +139,28 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
     }
 
     private void update(float delta) {
-        for (Player player : players) {
+        Iterator<Player> playerIterator = players.iterator();
+        while (playerIterator.hasNext()) {
+            Player player = playerIterator.next();
             player.update(delta);
             if (! terrain.contains(player)) {
-                if (player.getCollisionPoint().y > terrain.getTopCape() || player.getCollisionPoint().x < terrain.getLeftCape()) {
-                    player.fall(true);
-                } else if (player.getCollisionPoint().y < terrain.getBottomCape() || player.getCollisionPoint().x > terrain.getRightCape()) {
-                    player.fall(false);
+                if (player.isAlive()) {
+                    if (player.getCollisionPoint().y > terrain.getTopCape() || player.getCollisionPoint().x < terrain.getLeftCape()) {
+                        player.fall(true);
+                    } else if (player.getCollisionPoint().y < terrain.getBottomCape() || player.getCollisionPoint().x > terrain.getRightCape()) {
+                        player.fall(false);
+                    }
+                } else {
+                    if (player.getX() > 1500 || player.getX() < -500 || player.getY() > 1000 || player.getY() < -100) {
+                        playerIterator.remove();
+                    }
                 }
-
             }
+        }
+
+        if (players.size() == 1) {
+            players.get(0).onWin();
+            // TODO implement win screen
         }
     }
 

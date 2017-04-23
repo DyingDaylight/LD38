@@ -24,6 +24,7 @@ public class Player extends Sprite implements MovementListener {
     public static final int KICKED = 2;
     public static final int WALK = 3;
     public static final int KICK = 4;
+    public static final int WIN = 5;
 
     private Vector2 collisionPoint;
 
@@ -59,6 +60,11 @@ public class Player extends Sprite implements MovementListener {
 
     public void update(float delta) {
         updateState(delta);
+
+        if (state == WIN) {
+            return;
+        }
+
         getMovementController().progress(delta);
 
         if (state == FALL) {
@@ -100,7 +106,6 @@ public class Player extends Sprite implements MovementListener {
             } else {
                 kickDirection.x = (velocity.x > 0 ? 1 : (velocity.x < 0 ? -1 : 0));
                 kickDirection.y = (velocity.y > 0 ? 1 : (velocity.y < 0 ? -1 : 0));
-                System.out.println(kickDirection.x + " " + kickDirection.y);
             }
         }
 
@@ -141,8 +146,10 @@ public class Player extends Sprite implements MovementListener {
                 kickedDirection.x = 0;
                 kickedDirection.y = 0;
                 setState(STAND);
+                movementController.kickedFinished();
             } else if (state == KICK) {
                 setState(STAND);
+                movementController.kickFinished();
             }
         }
     }
@@ -202,7 +209,6 @@ public class Player extends Sprite implements MovementListener {
     }
 
     public Rectangle getKickBox() {
-        //TODO
         kickBox.set(0, 0, 1, 1);
         if (kickDirection.x == -1) {
             kickBox.set(getX() + 13, getY(), 30, 30);
@@ -221,6 +227,7 @@ public class Player extends Sprite implements MovementListener {
 
     public void kicked(Vector2 kickDirection) {
         setState(KICKED);
+        movementController.kicked();
         if (kickDirection.x == -1) {
             kickedDirection.x = -700;
             flipX = true;
@@ -255,4 +262,15 @@ public class Player extends Sprite implements MovementListener {
         return behindTerrain;
     }
 
+    public boolean isAlive() {
+        return state != FALL;
+    }
+
+    public boolean isKickable() {
+        return isAlive() && state != KICKED;
+    }
+
+    public void onWin() {
+        setState(WIN);
+    }
 }

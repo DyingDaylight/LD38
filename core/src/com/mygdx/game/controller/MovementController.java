@@ -13,8 +13,14 @@ public interface MovementController {
 
     public void progress(float delta);
 
+    void kickedFinished();
+
+    void kicked();
+
     public boolean isMovingRight();
     public boolean isMovingLeft();
     public boolean isMovingUp();
     public boolean isMovingDown();
+
+    public void kickFinished();
 }

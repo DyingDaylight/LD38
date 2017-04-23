@@ -74,6 +74,16 @@ public class InputController extends InputAdapter implements MovementController 
         }
     }
 
+    @Override
+    public void kickedFinished() {
+
+    }
+
+    @Override
+    public void kicked() {
+
+    }
+
     private boolean isKeyPressed(Integer action) {
         return Gdx.input.isKeyPressed(keys.get(action));
     }
@@ -96,6 +106,11 @@ public class InputController extends InputAdapter implements MovementController 
     @Override
     public boolean isMovingDown() {
         return direction.y == -1;
+    }
+
+    @Override
+    public void kickFinished() {
+
     }
 
     @Override
