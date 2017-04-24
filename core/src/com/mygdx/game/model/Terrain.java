@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.data.Configuration;
 import com.mygdx.game.data.ImageCache;
 
@@ -81,6 +82,22 @@ public class Terrain {
         return Intersector.isPointInPolygon(collisionPolygon.getVertices(),
                 0, collisionPolygon.getVertices().length,
                 player.getCollisionPoint().x, player.getCollisionPoint().y);
+    }
+
+    public Vector2 getLeftBottom() {
+        return new Vector2(collisionPolygon.getVertices()[0], collisionPolygon.getVertices()[1]);
+    }
+
+    public Vector2 getRightBottom() {
+        return new Vector2(collisionPolygon.getVertices()[2], collisionPolygon.getVertices()[3]);
+    }
+
+    public Vector2 getRightTop() {
+        return new Vector2(collisionPolygon.getVertices()[4], collisionPolygon.getVertices()[5]);
+    }
+
+    public Vector2 getLeftTop() {
+        return new Vector2(collisionPolygon.getVertices()[6], collisionPolygon.getVertices()[7]);
     }
 
     public int getLeftCape() {

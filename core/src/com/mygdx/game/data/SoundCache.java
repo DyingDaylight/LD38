@@ -33,7 +33,11 @@ public class SoundCache {
         }
     }
 
-    public static void play(String key) {
-        sounds.get(key).play();
+    public static long play(String key) {
+        return sounds.get(key).play();
+    }
+
+    public static void stop(String key) {
+        sounds.get(key).stop();
     }
 }

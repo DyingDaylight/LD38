@@ -104,8 +104,10 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
             @Override
             public boolean keyUp(int keycode) {
                 if (keycode == Input.Keys.R || (keycode == Input.Keys.ENTER && isGameFinished)) {
+                    SoundCache.stop("countdown");
                     getGame().setGameScreen(chosenPlayerType);
                 } else if (keycode == Input.Keys.ESCAPE) {
+                    SoundCache.stop("countdown");
                     getGame().setChooserScreen();
                 }
                 return super.keyUp(keycode);
@@ -238,11 +240,10 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
             player.update(delta);
             if (! terrain.contains(player)) {
                 if (player.isAlive()) {
-                    if (player.getCollisionPoint().y > terrain.getTopCape() || player.getCollisionPoint().x < terrain.getLeftCape()) {
-                        player.fall(true);
-                    } else if (player.getCollisionPoint().y < terrain.getBottomCape() || player.getCollisionPoint().x > terrain.getRightCape()) {
-                        player.fall(false);
-                    }
+                    player.fall(player.getCollisionPoint().y > terrain.getTopCape()
+                            || player.getCollisionPoint().y > terrain.getBottomCape()
+                            && player.getCollisionPoint().x > terrain.getLeftBottom().x
+                            && player.getCollisionPoint().x < terrain.getLeftTop().x);
                 } else {
                     if (player.getX() > 1500 || player.getX() < -500 || player.getY() < -100) {
                         if (player == this.player) {

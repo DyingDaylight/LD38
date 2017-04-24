@@ -188,6 +188,7 @@ public class Player extends Sprite implements MovementListener {
 
     public void fall(boolean isBehindTerrain) {
         if (state == FALL || state == WIN) return;
+        velocity.y = 0;
         setState(FALL);
         behindTerrain = isBehindTerrain;
     }
