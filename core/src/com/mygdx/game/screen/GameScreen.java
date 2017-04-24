@@ -127,7 +127,7 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
         Gdx.gl20.glClearColor(Configuration.BKG_R, Configuration.BKG_G, Configuration.BKG_B, 1);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if (delay <= DELAY_TIME) {
+        if (delay < DELAY_TIME) {
             delay += delta;
             if (delay >= DELAY_TIME) {
                 MusicCache.play("soundtrack");
@@ -136,7 +136,7 @@ public class GameScreen extends BaseScreen implements PlayerEventListener {
             int count = (int) (DELAY_TIME - delay);
             String name = "";
             if (count <= 3 && count > 0) {
-                name = String.format("number%d", count);
+                name = "number" + count;
             } else {
                 name = "fight";
             }

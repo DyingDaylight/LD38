@@ -6,294 +6,267 @@ filter: Nearest,Nearest
 repeat: none
 fight
   rotate: false
-  xy: 2, 810
+  xy: 2, 803
   size: 665, 200
   orig: 665, 200
   offset: 0, 0
   index: -1
 fish
   rotate: false
-  xy: 849, 266
+  xy: 703, 297
   size: 94, 127
   orig: 94, 127
   offset: 0, 0
   index: 1
 fish
   rotate: false
-  xy: 849, 135
+  xy: 703, 166
   size: 94, 127
   orig: 94, 127
   offset: 0, 0
   index: 2
 fish
   rotate: false
-  xy: 849, 4
+  xy: 703, 35
   size: 94, 127
   orig: 94, 127
   offset: 0, 0
   index: 3
 fish-kick-right
   rotate: false
-  xy: 639, 286
-  size: 94, 127
-  orig: 94, 127
-  offset: 0, 0
-  index: -1
-fish-kick-right
-  rotate: false
-  xy: 639, 286
+  xy: 914, 653
   size: 94, 127
   orig: 94, 127
   offset: 0, 0
   index: 1
 game_over
   rotate: false
-  xy: 2, 497
+  xy: 2, 490
   size: 402, 309
   orig: 402, 309
   offset: 0, 0
   index: -1
 left_button
   rotate: false
-  xy: 628, 549
+  xy: 327, 20
   size: 109, 72
   orig: 109, 72
   offset: 0, 0
   index: -1
 nice
   rotate: false
-  xy: 2, 326
+  xy: 2, 319
   size: 476, 167
   orig: 476, 167
   offset: 0, 0
   index: -1
 number1
   rotate: false
-  xy: 862, 791
+  xy: 862, 784
   size: 146, 219
   orig: 146, 219
   offset: 0, 0
   index: -1
 number2
   rotate: false
-  xy: 384, 103
+  xy: 193, 96
   size: 146, 219
   orig: 146, 219
   offset: 0, 0
   index: -1
 number3
   rotate: false
-  xy: 482, 326
+  xy: 343, 96
   size: 146, 219
   orig: 146, 219
   offset: 0, 0
   index: -1
 person1-falling
   rotate: false
-  xy: 534, 63
+  xy: 493, 71
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: -1
 person1-happy
   rotate: false
-  xy: 790, 528
+  xy: 598, 147
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 1
 person1-happy
   rotate: false
-  xy: 895, 528
+  xy: 598, 16
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 2
 person1-kick-right-boot
   rotate: false
-  xy: 737, 397
+  xy: 809, 653
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 1
 person1-surprise
   rotate: false
-  xy: 842, 397
+  xy: 704, 559
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 1
 person1-walk
   rotate: false
-  xy: 639, 23
+  xy: 692, 428
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 1
 person1-walk
   rotate: false
-  xy: 744, 2
+  xy: 809, 522
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 2
-person3-falling
-  rotate: false
-  xy: 534, 194
-  size: 101, 128
-  orig: 101, 128
-  offset: 0, 0
-  index: -1
-person3-happy
-  rotate: false
-  xy: 632, 417
-  size: 101, 128
-  orig: 101, 128
-  offset: 0, 0
-  index: 1
-person3-happy
-  rotate: false
-  xy: 790, 659
-  size: 101, 128
-  orig: 101, 128
-  offset: 0, 0
-  index: 2
-person3-kick-right-boot
-  rotate: false
-  xy: 895, 659
-  size: 101, 128
-  orig: 101, 128
-  offset: 0, 0
-  index: 1
-person3-surprise
-  rotate: false
-  xy: 639, 154
-  size: 101, 128
-  orig: 101, 128
-  offset: 0, 0
-  index: 1
-person3-walk
-  rotate: false
-  xy: 744, 265
-  size: 101, 128
-  orig: 101, 128
-  offset: 0, 0
-  index: 1
-person3-walk
-  rotate: false
-  xy: 744, 133
-  size: 101, 128
-  orig: 101, 128
-  offset: 0, 0
-  index: 2
-restart_button
-  rotate: false
-  xy: 2, 65
-  size: 216, 72
-  orig: 216, 72
-  offset: 0, 0
-  index: -1
-right_button
-  rotate: false
-  xy: 222, 65
-  size: 109, 72
-  orig: 109, 72
-  offset: 0, 0
-  index: -1
-ripples
-  rotate: false
-  xy: 671, 829
-  size: 187, 181
-  orig: 187, 181
-  offset: 0, 0
-  index: -1
-start_button
-  rotate: false
-  xy: 408, 549
-  size: 216, 72
-  orig: 216, 72
-  offset: 0, 0
-  index: -1
-tile1
-  rotate: false
-  xy: 2, 141
-  size: 187, 181
-  orig: 187, 181
-  offset: 0, 0
-  index: -1
-tile1_bkp
-  rotate: false
-  xy: 193, 141
-  size: 187, 181
-  orig: 187, 181
-  offset: 0, 0
-  index: -1
-tile2
-  rotate: false
-  xy: 408, 625
-  size: 187, 181
-  orig: 187, 181
-  offset: 0, 0
-  index: -1
-tile2_bkp
-  rotate: false
-  xy: 599, 625
-  size: 187, 181
-  orig: 187, 181
-  offset: 0, 0
-  index: -1
-
-pack2.png
-size: 1024,256
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
 person2-falling
   rotate: false
-  xy: 2, 2
+  xy: 914, 522
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: -1
 person2-happy
   rotate: false
-  xy: 107, 2
+  xy: 801, 391
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 1
 person2-happy
   rotate: false
-  xy: 212, 2
+  xy: 801, 260
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 2
 person2-kick-right-boot
   rotate: false
-  xy: 317, 2
+  xy: 906, 391
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 1
 person2-surprise
   rotate: false
-  xy: 422, 2
+  xy: 801, 129
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 1
 person2-walk
   rotate: false
-  xy: 527, 2
+  xy: 906, 260
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 1
 person2-walk
   rotate: false
-  xy: 632, 2
+  xy: 906, 129
   size: 101, 127
   orig: 101, 127
   offset: 0, 0
   index: 2
+person3-falling
+  rotate: false
+  xy: 2, 2
+  size: 101, 128
+  orig: 101, 128
+  offset: 0, 0
+  index: -1
+person3-happy
+  rotate: false
+  xy: 599, 671
+  size: 101, 128
+  orig: 101, 128
+  offset: 0, 0
+  index: 1
+person3-happy
+  rotate: false
+  xy: 704, 690
+  size: 101, 128
+  orig: 101, 128
+  offset: 0, 0
+  index: 2
+person3-kick-right-boot
+  rotate: false
+  xy: 482, 410
+  size: 101, 128
+  orig: 101, 128
+  offset: 0, 0
+  index: 1
+person3-surprise
+  rotate: false
+  xy: 493, 202
+  size: 101, 128
+  orig: 101, 128
+  offset: 0, 0
+  index: 1
+person3-walk
+  rotate: false
+  xy: 587, 410
+  size: 101, 128
+  orig: 101, 128
+  offset: 0, 0
+  index: 1
+person3-walk
+  rotate: false
+  xy: 598, 278
+  size: 101, 128
+  orig: 101, 128
+  offset: 0, 0
+  index: 2
+restart_button
+  rotate: false
+  xy: 408, 542
+  size: 216, 72
+  orig: 216, 72
+  offset: 0, 0
+  index: -1
+right_button
+  rotate: false
+  xy: 482, 334
+  size: 109, 72
+  orig: 109, 72
+  offset: 0, 0
+  index: -1
+ripples
+  rotate: false
+  xy: 671, 822
+  size: 187, 181
+  orig: 187, 181
+  offset: 0, 0
+  index: -1
+start_button
+  rotate: false
+  xy: 107, 20
+  size: 216, 72
+  orig: 216, 72
+  offset: 0, 0
+  index: -1
+tile1
+  rotate: false
+  xy: 2, 134
+  size: 187, 181
+  orig: 187, 181
+  offset: 0, 0
+  index: -1
+tile2
+  rotate: false
+  xy: 408, 618
+  size: 187, 181
+  orig: 187, 181
+  offset: 0, 0
+  index: -1

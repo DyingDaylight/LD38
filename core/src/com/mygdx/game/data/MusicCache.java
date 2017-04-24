@@ -24,6 +24,10 @@ public class MusicCache {
     }
 
     public static void play(String key) {
+        play(key, VOLUME);
+    }
+
+    public static void play(String key, float volume) {
         if (music != null) {
             if (MusicCache.key.equals(key)) {
                 if (!music.isPlaying()) {
@@ -39,7 +43,7 @@ public class MusicCache {
         String path  = MUSIC_DIR + key + MUSIC_EXT;
         music = Gdx.audio.newMusic(Gdx.files.internal(path));
         music.setLooping(true);
-        music.setVolume(VOLUME);
+        music.setVolume(volume);
         music.play();
     }
 
@@ -53,7 +57,10 @@ public class MusicCache {
     }
 
     public static void dispose() {
-        if (music != null) music.dispose();
+        if (music != null) {
+            music.stop();
+            music.dispose();
+        }
         music = null;
     }
 }

@@ -28,6 +28,8 @@ public class Player extends Sprite implements MovementListener {
     public static final int WIN = 5;
 
     private static final float JUMP_WIN_SPEED = 1000;
+    private static final float FADE_SPEED_START = -1000;
+    private static final float FADE_SPEED_END = -1500;
 
     private Vector2 collisionPoint;
 
@@ -123,19 +125,17 @@ public class Player extends Sprite implements MovementListener {
 
         setX(getX() + velocity.x * delta);
         setY(getY() + velocity.y * delta);
-
     }
 
     @Override
     public void draw(Batch batch) {
-        try {
-            setRegion(getStateFrame());
-            setFlip(flipX, false);
-        } catch (Exception e) {
-            String message = String.format("Failed to obtain animation. State: %d; texture: %s",
-                    state,
-                    getCurrentAnimation().getTextureName());
-            throw new RuntimeException(message);
+        setRegion(getStateFrame());
+        setFlip(flipX, false);
+        if (state == FALL && velocity.y < FADE_SPEED_START) {
+            float alpha = (velocity.y - FADE_SPEED_START)
+                    / (FADE_SPEED_END - FADE_SPEED_START);
+            alpha = 1 - (alpha > 1 ? 1 : alpha);
+            setAlpha(alpha);
         }
         super.draw(batch);
     }

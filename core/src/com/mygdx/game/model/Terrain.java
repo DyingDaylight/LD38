@@ -53,7 +53,7 @@ public class Terrain {
     private void generateTiles() {
         for (int i = 0; i < WIDTH * HEIGHT; i++) {
             int index = MathUtils.random(1, 2);
-            tileNames[i] = String.format("tile%d", index);
+            tileNames[i] = "tile" + index;
         }
     }
 
